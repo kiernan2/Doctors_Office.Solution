@@ -6,14 +6,14 @@
 
 <h2>Add a Doctor</h2>
 
-<h4>Add a Doctor to this task: @Html.DisplayFor(model => model.Name)</h4>
+<h4>Add a Doctor to this Patient: @Html.DisplayFor(model => model.Name)</h4>
 
 @using (Html.BeginForm())
 {
   @Html.HiddenFor(model => model.PatientId)
 
-  @Html.Label("Select patient")
-  @Html.DropDownList("PatientId")
+  @Html.Label("Select doctor")
+  @Html.DropDownList("DoctorId")
 
   <input type="submit" value="Save" />
 }

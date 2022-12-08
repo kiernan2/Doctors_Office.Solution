@@ -10,6 +10,8 @@
 {
   @Html.LabelFor(model => model.Name)
   @Html.TextBoxFor(model => model.Name)
+  @Html.LabelFor(model => model.Birthdate)
+  @Html.TextBoxFor(model => model.Birthdate)
 
   @Html.Label("Select doctor")
   @Html.DropDownList("DoctorId")
