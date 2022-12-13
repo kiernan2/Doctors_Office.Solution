@@ -116,25 +116,28 @@ namespace Doctors_Office.Controllers
       _db.SaveChanges();
       return RedirectToAction("Index");
     }
-    public ActionResult AddDoctor(Doctor doctor, int patientId)
-    {
-      ViewBag.DoctorId = new SelectList(_db.Doctors, "DoctorId", "Name");
-      Patient thisPatient = _db.Patients.FirstOrDefault(patient => patient.PatientId == patientId);
-      if (doctor.DoctorId != 0)
-      {
-        _db.DoctorsPatients.Add(new DoctorPatient() { DoctorId = doctor.DoctorId, PatientId = patientId});
-        _db.SaveChanges();
-      }
-      return View(thisPatient);
-    }
 
     [HttpPost]
-    public ActionResult AddDoctor(int joinId)
+    public ActionResult AddDoctor(Patient patient, int doctorId)
     {
-      DoctorPatient joinEntry = _db.DoctorsPatients.FirstOrDefault(entry => entry.DoctorPatientId == joinId);
-      _db.DoctorsPatients.Add(joinEntry);
+      bool duplicate = _db.DoctorsPatients.Any(join =>
+      join.DoctorId == doctorId && join.PatientId == patient.PatientId);
+      
+      if (doctorId != 0 && !duplicate)
+      {
+        _db.DoctorsPatients.Add(new DoctorPatient() { DoctorId = doctorId, PatientId = patient.PatientId});
+      }
+
       _db.SaveChanges();
       return RedirectToAction("Index");
+    }
+
+
+    public ActionResult AddDoctor(int id)
+    {
+      Patient thisPatient = _db.Patients.FirstOrDefault(patient => patient.PatientId == id);
+      ViewBag.DoctorId = new SelectList(_db.Doctors, "DoctorId", "Name");
+      return View(thisPatient);
     }
   }
 }
