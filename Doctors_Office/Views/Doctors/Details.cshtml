@@ -12,7 +12,7 @@
 <ul>
   @if (@Model.JoinEntities.Count == 0)
   {
-    <p>This Doctor does not have any patients</p>
+    <p>This Doctor does not have any Patients</p>
   }
   else
   {
@@ -21,6 +21,21 @@
       @foreach(DoctorPatient join in Model.JoinEntities)
       {
         <li>@join.Patient.Name</li>
+      }
+    </ul>
+  }
+
+  @if (@Model.JoinEntities2.Count == 0)
+  {
+    <p>This Doctor does not have any Specialties</p>
+  }
+  else
+  {
+    <h4>Specialties this Doctor has</h4>
+    <ul>
+      @foreach(DoctorSpecialty join in Model.JoinEntities2)
+      {
+        <li>@join.Specialty.SpecialtyName</li>
       }
     </ul>
   }
