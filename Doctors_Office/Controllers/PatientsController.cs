@@ -36,7 +36,7 @@ namespace Doctors_Office.Controllers
       return View();
     }
 
-      [HttpPost]
+    [HttpPost]
     public ActionResult Create(Patient patient, int doctorId)
     {
       _db.Patients.Add(patient);

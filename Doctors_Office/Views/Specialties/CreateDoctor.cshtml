@@ -1,0 +1,23 @@
+@{
+  Layout = "_Layout";
+}
+
+@model Doctors_Office.Models.Specialty;
+
+<h2>Add a new Doctor</h2>
+
+<h4>Add a Doctor to this Specialty: @Html.DisplayFor(model => model.SpecialtyName)</h4>
+
+@{ var doctor = ViewBag.Doctor; }
+
+@using (Html.BeginForm())
+{
+  @Html.HiddenFor(model => model.SpecialtyId)
+
+  <p>model.SpecialtyName</p>
+  @Html.TextBox("Doctor")
+
+  <input type="submit" value="Add new Doctor" />
+}
+
+<p>@Html.ActionLink("Back to Specialties", "Index")</p>

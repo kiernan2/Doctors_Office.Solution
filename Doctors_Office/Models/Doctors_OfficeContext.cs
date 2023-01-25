@@ -6,7 +6,9 @@ namespace Doctors_Office.Models
   {
     public DbSet<Doctor> Doctors { get; set; }
     public DbSet<Patient> Patients { get; set; }
+    public DbSet<Specialty> Specialties { get; set; }
     public DbSet<DoctorPatient> DoctorsPatients { get; set; }
+    public DbSet<DoctorSpecialty> DoctorsSpecialties { get; set; }
     public Doctors_OfficeContext(DbContextOptions options) : base(options) { }
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

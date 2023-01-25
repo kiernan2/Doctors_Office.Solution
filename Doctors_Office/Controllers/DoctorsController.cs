@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,8 +18,10 @@ namespace Doctors_Office.Controllers
 
       public ActionResult Index()
       {
+        //List<DoctorSpecialty> model = _db.DoctorsSpecialties.ToList();
         List<Doctor> model = _db.Doctors.ToList();
         return View(model);
+        // return View(_db.Doctors.ToList());
       }
 
       public ActionResult Details(int id)
@@ -38,6 +41,7 @@ namespace Doctors_Office.Controllers
       [HttpPost]
       public ActionResult Create(Doctor doctor)
       {
+        ViewBag.Doctor = doctor;
         _db.Doctors.Add(doctor);
         _db.SaveChanges();
         return RedirectToAction("Index");
@@ -70,6 +74,28 @@ namespace Doctors_Office.Controllers
         _db.Doctors.Remove(thisDoctor);
         _db.SaveChanges();
         return RedirectToAction("Index");
+      }
+
+      [HttpPost]
+      public ActionResult AddSpecialty(Specialty specialty, int doctorId)
+      {
+        bool duplicate = _db.DoctorsSpecialties.Any(join =>
+        join.DoctorId == doctorId && join.SpecialtyId == specialty.SpecialtyId);
+
+        if(doctorId != 0 && !duplicate)
+        {
+          _db.DoctorsSpecialties.Add(new DoctorSpecialty() { DoctorId = doctorId, SpecialtyId = specialty.SpecialtyId});
+        }
+        
+        _db.SaveChanges();
+        return RedirectToAction("Index");
+      }
+
+      public ActionResult AddSpecialty(int id)
+      {
+        Doctor thisDoctor = _db.Doctors.FirstOrDefault(doctor => doctor.DoctorId == id);
+        ViewBag.SpecialtyId = new SelectList(_db.Specialties, "SpecialtyId", "Name");
+        return View(thisDoctor);
       }
     }
   }
