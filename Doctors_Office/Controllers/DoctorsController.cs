@@ -39,12 +39,23 @@ namespace Doctors_Office.Controllers
       }
 
       [HttpPost]
-      public ActionResult Create(Doctor doctor)
+      //I give an optional parameter for 'specialtyId' 
+      //this means if nothign is passed in, it will be 0
+      public ActionResult Create(Doctor doctor, int si = 0)
       {
-        ViewBag.Doctor = doctor;
-        _db.Doctors.Add(doctor);
-        _db.SaveChanges();
-        return RedirectToAction("Index");
+        if(si == 0)
+          {
+          ViewBag.Doctor = doctor;
+          _db.Doctors.Add(doctor);
+          _db.SaveChanges();
+          return RedirectToAction("Index");
+        } else {
+          _db.Doctors.Add(doctor);
+          _db.SaveChanges();
+          _db.DoctorsSpecialties.Add(new DoctorSpecialty() { DoctorId = doctor.DoctorId, SpecialtyId = si });
+          _db.SaveChanges();
+          return RedirectToAction("Details","Specialties", new {id = si});
+        }
       }
 
       public ActionResult Edit(int id)

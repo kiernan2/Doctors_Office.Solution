@@ -6,7 +6,7 @@ namespace Doctors_Office.Models
   {
     public int DoctorId { get; set; }
     public string Name { get; set; }
-    
+    public int SpecialtyId { get; set; }
     public virtual ICollection<DoctorPatient> JoinEntities { get; set; }
     public virtual ICollection<DoctorSpecialty> JoinEntities2 { get; set; }
     public Doctor()
